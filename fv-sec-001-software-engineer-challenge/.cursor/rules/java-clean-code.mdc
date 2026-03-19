@@ -1,0 +1,80 @@
+---
+description: Java clean code - explicit, readable, maintainable
+globs: "**/*.java"
+alwaysApply: false
+---
+
+# Java Clean Code
+
+## Principles
+
+- **Explicit over implicit**: Clear naming, no magic numbers, obvious intent
+- **Single responsibility**: One class/method = one reason to change
+- **Fail fast**: Validate early, throw meaningful exceptions
+- **No dead code**: Remove commented blocks, unused imports, unreachable code
+
+## Naming
+
+```java
+// Classes/Records: PascalCase, noun
+public class CsvReader {}
+public record CampaignAggregate(String campaignId, long totalImpressions) {}
+
+// Methods: camelCase, verb
+public void parseRow(String line) {}
+public Optional<CampaignAggregate> findTopByCtr(int limit) {}
+
+// Constants: UPPER_SNAKE_CASE
+private static final int CTR_DECIMAL_PLACES = 4;
+private static final int CPA_DECIMAL_PLACES = 2;
+```
+
+## Method Design
+
+- Max ~20–30 lines per method; extract helpers when longer
+- Max 3–4 parameters; use record/DTO for more
+- Early returns to reduce nesting
+- One level of abstraction per method
+
+```java
+// BAD: nested, mixed abstraction
+public void process() {
+    for (var row : rows) {
+        if (row != null) {
+            var parts = row.split(",");
+            if (parts.length >= 6) {
+                var campaignId = parts[0].trim();
+                // ... 20 more lines
+            }
+        }
+    }
+}
+
+// GOOD: extracted, clear
+public void process() {
+    for (var row : rows) {
+        parseAndAggregate(row).ifPresent(this::addToAggregate);
+    }
+}
+```
+
+## Null & Optional
+
+- Use `Optional` for return types that may be absent
+- Avoid `Optional` as field or parameter
+- Prefer `Objects.requireNonNull` for required params
+
+## Error Messages
+
+- English, descriptive, include context
+- Example: `"Invalid CSV row: expected 6 columns, got %d: %s"`
+
+## Code Smells to Avoid
+
+| Smell | Fix |
+|-------|-----|
+| Magic numbers | Named constants |
+| Long parameter list | Record/DTO |
+| Deep nesting | Early return, extract method |
+| Silent catch | Log and rethrow or handle |
+| God class | Split into focused classes |

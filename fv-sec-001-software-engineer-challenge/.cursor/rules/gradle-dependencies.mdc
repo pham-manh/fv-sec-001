@@ -1,0 +1,43 @@
+---
+description: Gradle dependencies - allowed libraries for the project
+globs: "build.gradle.kts"
+alwaysApply: false
+---
+
+# Gradle Dependencies
+
+## Policy
+
+You may add Gradle dependencies needed for the task. Prefer well-maintained, widely-used libraries.
+
+## Common Dependencies for This Project
+
+| Purpose | Dependency | Notes |
+|---------|------------|-------|
+| CSV parsing | `org.apache.commons:commons-csv` | Streaming-friendly |
+| CLI args | `info.picocli:picocli` | Or `commons-cli` |
+| Logging | `org.slf4j:slf4j-api` + `ch.qos.logback:logback-classic` | SLF4J facade |
+| Testing | `org.assertj:assertj-core` | Fluent assertions |
+| BigDecimal utilities | Built-in `java.math.BigDecimal` | No extra dep |
+
+## Adding Dependencies
+
+Add to `dependencies { }` in `build.gradle.kts`:
+
+```kotlin
+dependencies {
+    implementation("org.apache.commons:commons-csv:1.10.0")
+    implementation("info.picocli:picocli:4.7.5")
+    implementation("org.slf4j:slf4j-api:2.0.9")
+    runtimeOnly("ch.qos.logback:logback-classic:1.4.14")
+
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.assertj:assertj-core:3.24.2")
+}
+```
+
+## Version Management
+
+- Use explicit versions or BOM (e.g. `platform(...)`) for consistency
+- Prefer recent stable versions from Maven Central

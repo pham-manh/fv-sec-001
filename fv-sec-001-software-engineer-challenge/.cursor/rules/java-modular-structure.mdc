@@ -1,0 +1,53 @@
+---
+description: Java modular structure - packages, classes, method extraction
+globs: "**/*.java"
+alwaysApply: false
+---
+
+# Java Modular Structure
+
+## Package Layout
+
+Prefer small, focused packages. Create new packages and classes to split logic.
+
+```
+com.flinters.aggregator/
+├── AggregatorApp.java          # CLI entrypoint only
+├── reader/                     # CSV reading
+│   └── CsvStreamReader.java
+├── model/                      # Domain entities
+│   └── CampaignAggregate.java
+├── aggregator/                 # Aggregation logic
+│   └── CampaignAggregator.java
+├── calculator/                 # CTR/CPA computation
+│   └── MetricsCalculator.java
+├── writer/                     # CSV output
+│   └── CsvWriter.java
+└── cli/                        # Argument parsing
+    └── CliParser.java
+```
+
+## When to Extract
+
+- Method > ~25 lines → extract sub-methods or new class
+- Class has multiple unrelated responsibilities → split
+- Repeated logic in 2+ places → extract to shared util/class
+- Complex condition → extract to named method
+
+## Class Size
+
+- Prefer small classes (< 300 lines)
+- One public type per file
+- Cohesive: all methods relate to one concept
+
+## Dependency Direction
+
+- High-level (CLI, App) depends on low-level (reader, writer)
+- Domain/model has no dependencies on I/O
+- Use interfaces for testability when needed
+
+## Creating New Files
+
+- Create package directory: `src/main/java/com/flinters/aggregator/<subpackage>/`
+- Mirror in test: `src/test/java/com/flinters/aggregator/<subpackage>/`
+- One public class per file, same name as file

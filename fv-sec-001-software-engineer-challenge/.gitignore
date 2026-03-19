@@ -1,2 +1,26 @@
+# Build outputs
+build/
+out/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Gradle
+.gradle/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+
+# Challenge data
 generator
 ad_data.csv
+
+# Output
+results/

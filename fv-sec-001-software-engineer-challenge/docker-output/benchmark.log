@@ -1,0 +1,9 @@
+=== Benchmark Results ===
+Input file: ad_data.csv (994.97 MB)
+Total rows: 26,843,544
+Rows skipped: 0
+Campaigns found: 50
+Processing time: 31.9s
+Peak memory: 154 MB
+JVM args: (default)
+Date: 2026-03-19 14:13:11

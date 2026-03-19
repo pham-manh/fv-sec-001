@@ -2,12 +2,14 @@ package com.flinters.aggregator;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class AggregatorAppTest {
 
     @Test
-    void placeholderTest() {
-        assertTrue(true, "Project setup verified");
+    void mainWithHelpExitsSuccessfully() {
+        int exitCode = new picocli.CommandLine(new com.flinters.aggregator.cli.CliConfig())
+                .execute("--help");
+        assertThat(exitCode).isEqualTo(0);
     }
 }

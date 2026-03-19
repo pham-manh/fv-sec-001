@@ -1,0 +1,17 @@
+.git
+.gitignore
+.gradle
+build
+*.md
+.idea
+.vscode
+*.iml
+out
+.DS_Store
+**/test/**
+**/*Test.java
+**/*Test.kt
+.cursor
+results
+logs
+ad_data.csv
